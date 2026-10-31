@@ -6,24 +6,21 @@ const Salary = require("./models/Salary");
 
 const app = express();
 
-const PORT = 5000;
+// Render provides PORT automatically
+const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors());
 app.use(express.json());
-
 
 // Test route
 app.get("/", (req, res) => {
     res.send("Salary Calculator Backend is Running!");
 });
 
-
 // Save salary calculation
 app.post("/api/salary", async (req, res) => {
-
     try {
-
         const {
             city,
             payCommission,
@@ -46,7 +43,6 @@ app.post("/api/salary", async (req, res) => {
         });
 
     } catch (error) {
-
         console.log(error);
 
         res.status(500).json({
@@ -55,19 +51,17 @@ app.post("/api/salary", async (req, res) => {
     }
 });
 
-
-// MongoDB connection
+// Connect to MongoDB Atlas using Render Environment Variable
 mongoose
-    .connect("mongodb://127.0.0.1:27017/salary_calculator")
+    .connect(process.env.MONGO_URI)
     .then(() => {
-        console.log("MongoDB Connected Successfully");
+        console.log("MongoDB Atlas Connected Successfully");
     })
     .catch((error) => {
-        console.log("MongoDB Connection Error:", error);
+        console.log("MongoDB Connection Error:", error.message);
     });
-
 
 // Start server
 app.listen(PORT, () => {
-    console.log(`Backend Server Running on http://localhost:${PORT}`);
+    console.log(`Backend Server Running on port ${PORT}`);
 });

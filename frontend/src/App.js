@@ -92,7 +92,7 @@ function App() {
     try {
 
       await axios.post(
-        "http://localhost:5000/api/salary",
+        "https://salary-calculator-kewu.onrender.com/api/salary",
         {
           city: selectedCity,
           payCommission: selectedCommission,
